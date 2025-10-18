@@ -3,13 +3,14 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import Card from './components/Card'
+import Home from './components/Home'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
 
-    <Card  amount={1000} description={"Laptop Emi Payment"} type={"debit"} />
+    <Home />
     
   )
 }
