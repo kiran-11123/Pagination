@@ -44,9 +44,9 @@ export default function Home() {
 
         }
         catch (er) {
-            return res.status(500).json({
-                message: "Internal Server Error..."
-            })
+           
+                alert("Internal Server Error")
+            
         }
 
     }

@@ -2,6 +2,14 @@ import express from 'express'
 const Page_Router = express.Router();
 import { PrismaClient } from '../generated/prisma/client.js';
 const prisma = new PrismaClient();
+import redis from 'redis';
+
+const redisClient = redis.createClient({
+  url: 'redis://localhost:6379' // default Redis URL
+});
+
+redisClient.on('error', (err) => console.error('Redis Error:', err));
+await redisClient.connect(); // ensure connection before use
 
 Page_Router.get("/page" , async(req,res)=>{
 
@@ -20,7 +28,7 @@ Page_Router.get("/page" , async(req,res)=>{
             console.log("triggered in redis")
             return res.status(200).json({
                 message:"Data Fetched successfully...",
-            data : data
+            data: JSON.parse(cachedData)
             })
         }
          
@@ -30,7 +38,7 @@ Page_Router.get("/page" , async(req,res)=>{
             take:10
         })
 
-        await redisClient.setEx(`post:${page}` , JSON.stringify(data))
+        await redisClient.setEx(`page:${page}`,60 , JSON.stringify(data))
 
         if(!data || data.length === 0){
             return res.status(400).json({
