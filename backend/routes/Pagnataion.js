@@ -13,12 +13,24 @@ Page_Router.get("/page" , async(req,res)=>{
         if (isNaN(page) || page < 0) page = 0; // fallback to page 0
 
         const skip = page * 10; // items to skip per page
+
+        const cachedData = await redisClient.get(`page:${page}`);
+
+        if(cachedData){
+            console.log("triggered in redis")
+            return res.status(200).json({
+                message:"Data Fetched successfully...",
+            data : data
+            })
+        }
          
         
         const data = await prisma.Transaction.findMany({
             skip:skip,
             take:10
         })
+
+        await redisClient.setEx(`post:${page}` , JSON.stringify(data))
 
         if(!data || data.length === 0){
             return res.status(400).json({

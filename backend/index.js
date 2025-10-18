@@ -1,9 +1,16 @@
 import express from 'express'
 import cors from 'cors'
 import Page_Router from './routes/Pagnataion.js';
+import axios from 'axios'
+import { createClient } from 'redis';
 const app = express();
 app.use(express.json());
 app.use(cors());
+
+const redisClient = createClient();
+
+redisClient.on("error" , (err)=>console.log("Redis Error" , err))
+await redisClient.connect();
 
 app.use("/api/v1" , Page_Router)
 
