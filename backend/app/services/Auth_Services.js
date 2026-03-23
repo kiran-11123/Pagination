@@ -1,9 +1,7 @@
-import prisma from '../../db.js';
-import express from 'express'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
-import zod from 'zod'
-
+import bcrypt from 'bcryptjs'
+import prisma from '../../others/db.js';
 dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET;
 

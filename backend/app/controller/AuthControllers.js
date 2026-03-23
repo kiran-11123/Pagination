@@ -1,5 +1,6 @@
 import { SignInService, SignUpService  , DeleteUserService} from "../services/Auth_Services.js";
-import { AuthMiddleware } from "../middlewares/Auth_middleware.js";
+
+import logger from "../../others/logger.js";
 import zod from 'zod';
 
 const zod_SigninSchema = zod.object({
@@ -15,6 +16,11 @@ const zod_SignUpSchema = zod.object({
 
 
 export const SigninContoller = async (req, res) => {
+
+     logger.info({
+      message: "Signin request received",
+      email: req.body.email
+    });
 
     try {
 
@@ -49,14 +55,24 @@ export const SigninContoller = async (req, res) => {
 
         })
 
+         logger.info({
+      message: "Signin Successfull",
+      email: req.body.email
+    });
+
         return res.status(200).json({
             message: 'User LoggedIn successfully',
 
         })
-
+       
 
     }
     catch (er) {
+
+         logger.info({
+      message: "Error while Signin",
+      email: req.body.email
+    });
 
 
         if (er.message === 'Credentails Wrong') {
@@ -76,6 +92,12 @@ export const SigninContoller = async (req, res) => {
 
 
 export const SignUpController = async (req, res) => {
+
+     logger.info({
+      message: "Signup request received",
+      email: req.body.email,
+      error:er
+    });
     try {
 
 
@@ -91,6 +113,12 @@ export const SignUpController = async (req, res) => {
 
         await SignUpService(email, username, password)
 
+
+         logger.info({
+      message: "Signup Successfull",
+      email: req.body.email
+    });
+
         return res.status(201).json({
             message: "User Registered Successfully"
         })
@@ -98,6 +126,13 @@ export const SignUpController = async (req, res) => {
     }
 
     catch (er) {
+
+
+         logger.info({
+      message: "Error Occured while Signup",
+      email: req.body.email,
+      error : er
+    });
         if (er.message === 'Email Already registred...') {
             return res.status(400).json({
                 message: 'Email Already registred...'
