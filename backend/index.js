@@ -1,10 +1,7 @@
 import express from 'express'
 import cors from 'cors'
-import Page_Router from './routes/Pagnataion.js';
-import axios from 'axios'
-import { createClient } from 'redis';
-import dotenv from 'dotenv';
-dotenv.config();
+import Page_Router   from './routes/Pagnataion.js';
+import Auth_Router from './routes/Auth_Routes.js';
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -14,7 +11,7 @@ app.use(cors());
 
 
 app.use("/api/v1" , Page_Router)
-
+app.use("/api/v1/auth" , Auth_Router);
 
 
 
