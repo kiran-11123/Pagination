@@ -1,4 +1,5 @@
-import { SignInService, SignUpService } from "../services/Auth_Services";
+import { SignInService, SignUpService  , DeleteUserService} from "../services/Auth_Services.js";
+import { AuthMiddleware } from "../middlewares/Auth_middleware.js";
 import zod from 'zod';
 
 const zod_SigninSchema = zod.object({
@@ -115,4 +116,33 @@ export const SignUpController = async (req, res) => {
     }
 
 
+}
+
+export const DeleteUserController = async(req,res)=>{
+      
+    try{
+
+        const userid = req.user.user_id;
+
+        const delete_user = await DeleteUserController(userid);
+
+        return res.status(200).json({
+            message : "User Deleted Successfully"
+        })
+
+        
+
+    }
+    catch(er){
+         
+        if(er.message === 'User Not Found'){
+             return res.status(400).json({
+                message : 'User Not Found'
+             })
+        }
+
+        return res.status(500).json({
+            message : "Internal Server Error"
+        })
+    }
 }

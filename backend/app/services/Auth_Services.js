@@ -96,3 +96,30 @@ export const SignUpService = async (email, username, password) => {
         throw er
     }
 }
+
+
+export const DeleteUserService = async(userid)=>{
+       
+    try{
+
+        const find_user = await prisma.user.findUnique({
+            where :{
+                UserId : userid
+            }
+        })
+
+        if(!find_user){
+             throw new Error('User Not Found')
+        }
+
+        await prisma.user.delete({
+            where : {
+                UserId : userid
+            }
+        })
+
+    }
+    catch(er){
+        throw er;
+    }
+}
