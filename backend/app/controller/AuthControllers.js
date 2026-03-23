@@ -1,6 +1,5 @@
-import { ca } from "zod/v4/locales";
 import { SignInService, SignUpService } from "../services/Auth_Services";
-
+import zod from 'zod';
 
 const zod_SigninSchema = zod.object({
     email: zod.string().email("Invalid Email Format").transform((val) => val.toLocaleLowerCase()),
