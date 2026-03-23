@@ -1,4 +1,4 @@
-import prisma from '../db.js';
+import prisma from '../../db.js';
 import express from 'express'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
@@ -61,6 +61,22 @@ Auth_Router.post("/signin", async (req,res)=>{
      
 })
 
+
+Auth_Router.post("/signup " , async(req,res)=>{
+     try{
+
+        const {email , username  , password}  = req.body;
+
+        
+
+     }
+     catch(er){
+          
+        return res.status(500).json({
+            message : "Internal Server Error"
+        })
+     }
+})
 
 
 

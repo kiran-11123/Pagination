@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
-import Page_Router   from './routes/Pagnataion.js';
-import Auth_Router from './routes/Auth_Routes.js';
+import Page_Router   from './app/routes/Pagnataion.js';
+import Auth_Router from './app/routes/Auth_Routes.js';
 const app = express();
 app.use(express.json());
 app.use(cors());
