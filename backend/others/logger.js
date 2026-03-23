@@ -1,40 +1,39 @@
-import winston from "winston";
-import path from "path";
-import fs from "fs";
+import winston from 'winston';
+import DailyRotateFile from 'winston-daily-rotate-file';
+import path from 'path';
+import fs from 'fs';
 
-// create logs folder if not exists
-const logDir = path.join(process.cwd(), "./app/logging");
+const logDir = path.join(process.cwd(), './app/logging');
 
 if (!fs.existsSync(logDir)) {
-  fs.mkdirSync(logDir);
+  fs.mkdirSync(logDir, { recursive: true });
 }
 
-// define log format
-const logFormat = winston.format.combine(
-  winston.format.timestamp(),
-  winston.format.errors({ stack: true }),
-  winston.format.json()
-);
+const dailyTransport = new DailyRotateFile({
+  dirname: logDir,
+  filename: 'app-%DATE%.log',
+  datePattern: 'YYYY-MM-DD',
+  zippedArchive: false,
+  maxSize: '20m',
+  maxFiles: '14d',
+  level: 'info',
+});
 
-// create logger
+dailyTransport.on('error', (err) => {
+  console.error('Log transport error:', err);
+});
+
 const logger = winston.createLogger({
-  level: "info",
-  format: logFormat,
+  level: 'info',
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.errors({ stack: true }),
+    winston.format.json()
+  ),
   transports: [
-    // console logs
     new winston.transports.Console(),
-
-    // error logs
-    new winston.transports.File({
-      filename: path.join(logDir, "error.log"),
-      level: "error"
-    }),
-
-    // all logs
-    new winston.transports.File({
-      filename: path.join(logDir, "combined.log")
-    })
-  ]
+    dailyTransport,
+  ],
 });
 
 export default logger;

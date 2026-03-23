@@ -49,7 +49,7 @@ app.use("/api/v1/auth" , Auth_Router);
 
 
 
-
+import logger from './others/logger.js';
 app.listen(5000,()=>{
-    console.log("Server is Running")
+    logger.info("Server is Running")
 })
