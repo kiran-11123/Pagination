@@ -16,7 +16,7 @@ Page_Router.get("/page" , async(req,res)=>{
     try{
 
          const input = req.query.page || "0"; // get page number from query
-        let page = parseInt(input);
+         let page = parseInt(input);
 
         if (isNaN(page) || page < 0) page = 0; // fallback to page 0
 
@@ -25,7 +25,7 @@ Page_Router.get("/page" , async(req,res)=>{
         const cachedData = await redisClient.get(`page:${page}`);
 
         if(cachedData){
-            console.log("triggered in redis")
+           
             return res.status(200).json({
                 message:"Data Fetched successfully...",
             data: JSON.parse(cachedData)
