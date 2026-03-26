@@ -2,7 +2,8 @@ import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser';
 import rateLimit from 'express-rate-limit';
-
+import dotenv from 'dotenv'
+dotenv.config();
 
 
 
@@ -16,6 +17,7 @@ import Auth_Router from './app/routes/Auth_Routes.js';
 
 
 
+const port  = process.env.PORT;
 
 const app = express();
 app.use(express.json());
@@ -50,6 +52,6 @@ app.use("/api/v1/auth" , Auth_Router);
 
 
 import logger from './others/logger.js';
-app.listen(5000,()=>{
+app.listen(port,()=>{
     logger.info("Server is Running")
 })

@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
-    "start" : "node index.js"
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
@@ -28,9 +28,10 @@
     "node-cron": "^4.2.1",
     "nodemailer": "^7.0.6",
     "qrcode": "^1.5.4",
-    "redis": "^5.8.3",
+    "redis": "^5.11.0",
     "winston": "^3.19.0",
     "winston-daily-rotate-file": "^5.0.0",
+    "ws": "^8.20.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
