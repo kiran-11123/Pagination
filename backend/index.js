@@ -51,7 +51,7 @@ app.use("/api/v1/auth" , Auth_Router);
 
 
 
-import logger from './others/logger.js';
+import logger from './Global/logger.js';
 app.listen(port,()=>{
     logger.info("Server is Running")
 })

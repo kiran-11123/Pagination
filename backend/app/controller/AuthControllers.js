@@ -1,6 +1,6 @@
 import { SignInService, SignUpService  , DeleteUserService} from "../services/Auth_Services.js";
 
-import logger from "../../others/logger.js";
+import logger from "../../Global/logger.js";
 import zod from 'zod';
 
 const zod_SigninSchema = zod.object({

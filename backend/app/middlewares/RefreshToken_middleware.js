@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
-import { generate_token } from '../../others/utils/jwt.js';
-import logger from '../../others/logger.js';
+import { generate_token } from '../../Global/utils/jwt.js';
+import logger from '../../Global/logger.js';
 dotenv.config(); 
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN
 
