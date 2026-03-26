@@ -1,4 +1,4 @@
-import { SignUpController, SigninContoller  , DeleteUserController} from "../controller/AuthControllers.js";
+import { SignUpController, SigninContoller  , DeleteUserController} from "../controller/Auth/AuthControllers.js";
 import { AuthMiddleware } from "../middlewares/AccessToken_middleware.js";
 
 import express from 'express'
