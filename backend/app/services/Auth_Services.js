@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import bcrypt from 'bcryptjs'
 import prisma from '../../others/db.js';
 import { generate_token } from '../../others/utils/jwt.js';
+import { refresh_token, refresh_token } from '../../others/utils/refresh_token.js';
 dotenv.config();
 
 
@@ -42,8 +43,9 @@ export const SignInService = async (email, password) => {
         }
 
         const token = generate_token(details);
+        const refresh_token = refresh_token(details);
 
-        return token
+        return {token , refresh_token}
 
     }
     catch (er) {

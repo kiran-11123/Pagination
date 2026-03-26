@@ -38,7 +38,7 @@ export const SigninContoller = async (req, res) => {
 
         const { email, password } = req.body;
          
-        const token = await SignInService(email, password)
+        const {token  , refresh_token} = await SignInService(email, password)
 
 
         if (token === null) {
@@ -50,8 +50,16 @@ export const SigninContoller = async (req, res) => {
         res.cookie("token", token, {
             httpOnly: true,
             secure: false,
+            sameSite: "strict", 
+            maxAge: 15*60*1000
+
+        })
+
+        res.cookie("refresh_token", refresh_token , {
+            httpOnly: true,
+            secure: false,
             sameSite: "lax",
-            maxAge: 3600000
+            maxAge: 7 * 24 * 60 * 60 * 1000
 
         })
 

@@ -1,5 +1,5 @@
 import { SignUpController, SigninContoller  , DeleteUserController} from "../controller/AuthControllers.js";
-import { AuthMiddleware } from "../middlewares/Auth_middleware.js";
+import { AuthMiddleware } from "../middlewares/AccessToken_middleware.js";
 
 import express from 'express'
 const Auth_Router  = express.Router();
