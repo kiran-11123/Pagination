@@ -5,7 +5,7 @@ import zod from 'zod';
 
 const zod_SigninSchema = zod.object({
     email: zod.string().email("Invalid Email Format").transform((val) => val.toLocaleLowerCase()),
-    password: zod.string().min(6, "Password mustbe atleast 6 characters").max(20, "Password is too long")
+    password: zod.string()
 })
 
 const zod_SignUpSchema = zod.object({
@@ -37,7 +37,7 @@ export const SigninContoller = async (req, res) => {
         }
 
         const { email, password } = req.body;
-
+         
         const token = await SignInService(email, password)
 
 
@@ -47,7 +47,7 @@ export const SigninContoller = async (req, res) => {
             })
         }
 
-        res.cookie("token ", token, {
+        res.cookie("token", token, {
             httpOnly: true,
             secure: false,
             sameSite: "lax",
@@ -56,8 +56,8 @@ export const SigninContoller = async (req, res) => {
         })
 
          logger.info({
-      message: "Signin Successfull",
-      email: req.body.email
+         message: "Signin Successfull",
+         email: req.body.email
     });
 
         return res.status(200).json({
@@ -70,7 +70,7 @@ export const SigninContoller = async (req, res) => {
     catch (er) {
 
          logger.info({
-      message: "Error while Signin",
+      message: `Error while Signin , ${er}`,
       email: req.body.email
     });
 
@@ -96,12 +96,13 @@ export const SignUpController = async (req, res) => {
      logger.info({
       message: "Signup request received",
       email: req.body.email,
-      error:er
-    });
+      
+    })
+
     try {
 
 
-        const validate_schema = zod_SignUpSchema.safeParse(email, username, password);
+        const validate_schema = zod_SignUpSchema.safeParse(req.body);
 
         if (!validate_schema.success) {
             return res.status(400).json({
@@ -129,9 +130,8 @@ export const SignUpController = async (req, res) => {
 
 
          logger.info({
-      message: "Error Occured while Signup",
+      message: `Error Occured while Signup , ${er}`,
       email: req.body.email,
-      error : er
     });
         if (er.message === 'Email Already registred...') {
             return res.status(400).json({

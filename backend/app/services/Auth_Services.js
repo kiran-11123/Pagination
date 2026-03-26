@@ -2,8 +2,9 @@ import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 import bcrypt from 'bcryptjs'
 import prisma from '../../others/db.js';
+import { generate_token } from '../../others/utils/jwt.js';
 dotenv.config();
-const JWT_SECRET = process.env.JWT_SECRET;
+
 
 
 
@@ -35,12 +36,12 @@ export const SignInService = async (email, password) => {
         }
 
         const details = {
-            user_id: find_user.userId,
+            user_id: find_user.UserId,
             username: find_user.username,
             email: find_user.email,
         }
 
-        const token = jwt.sign(details, JWT_SECRET, { expiresIn: "7d" })
+        const token = generate_token(details);
 
         return token
 
