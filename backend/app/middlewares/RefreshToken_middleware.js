@@ -10,7 +10,7 @@ const REFRESH_TOKEN = process.env.REFRESH_TOKEN
 export const refresh_token_middleware = (req,res)=>{
 
     logger.info({
-        message : 'AccessToken is generating'
+        message : 'AccessToken is generating using the RefreshToken'
     })
        
     try{
