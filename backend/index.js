@@ -9,8 +9,8 @@ dotenv.config();
 
 
 import Page_Router   from './app/routes/Pagnataion.js';
-import Auth_Router from './app/routes/Auth_Routes.js';
-
+import Auth_Router from './app/routes/Auth/Auth_Routes.js';
+import Credentails_Router from './app/routes/Auth/Credentials_Manager_Routes.js';
 
 
 
@@ -42,6 +42,7 @@ app.use(limiter);
 
 app.use("/api/v1" , Page_Router)
 app.use("/api/v1/auth" , Auth_Router);
+app.use("/api/v1/credentails" , Credentails_Router);
 
 
 

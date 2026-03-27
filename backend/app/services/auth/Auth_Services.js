@@ -91,6 +91,14 @@ export const SignUpService = async (email, username, password) => {
             },
         })
 
+        const create_otp_model = await prisma.otp.create({
+
+            data : {
+                email: email
+            }
+             
+        })
+
         return new_user
     } catch (er) {
         throw er
