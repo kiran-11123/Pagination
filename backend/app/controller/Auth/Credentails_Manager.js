@@ -30,6 +30,9 @@ export const ForgotPasswordController = async (req,res)=>{
 
         const result   = await ForgotPasswordService(email);
         
+        logger.info({
+            message : `OTP is sent to the email ${email} for password reset`
+        })
         if(result===true){
              return res.status(200).json({
                 message : 'OTP Sent to your email'
