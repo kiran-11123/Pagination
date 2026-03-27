@@ -21,6 +21,8 @@ model User {
   password   String
   createdAt DateTime @default(now())
 
+  @@index([email , createdAt])
+
 }
 
 model otp{
@@ -30,6 +32,8 @@ model otp{
    otp  String?
    expiresOn DateTime?
   createdAt DateTime @default(now())
+
+  @@index([email])
 
 }
 model Transaction {

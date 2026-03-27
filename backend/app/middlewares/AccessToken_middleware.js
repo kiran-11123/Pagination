@@ -1,4 +1,4 @@
-
+import { refresh_token_middleware } from './RefreshToken_middleware.js';
 import dotenv from 'dotenv'
 dotenv.config();
 import jwt from 'jsonwebtoken'
@@ -11,10 +11,21 @@ export const Access_token_Middleware = (req, res, next) => {
 
         const token = req.cookies.token;
         if (!token) {
-            return res.status(401).json({
-                message: "Unauthorized Token"
-            })
+
+            const new_token = refresh_token_middleware(req,res);
+
+            if(!new_token){
+                return res.status(401).json({
+                    message: "Unauthorized Token"
+                })
+            }
+
+                return res.status(401).json({
+                    message: "Unauthorized"
+                })
         }
+
+
 
         const decoded = jwt.verify(token, JWT_SECRET);
 
