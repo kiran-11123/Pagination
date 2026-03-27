@@ -1,6 +1,6 @@
 import logger from "../../../Global/logger.js"
 import zod, { email } from 'zod'
-import { ForgotPasswordService } from "../../services/auth/Credentials_Manager_Service.js"
+import { ForgotPasswordService , ResetPasswordService } from "../../services/auth/Credentials_Manager_Service.js"
 
 
 const Verify_email = zod.object({
@@ -54,6 +54,12 @@ export const ForgotPasswordController = async (req,res)=>{
             })
         }
 
+        else if(er.message === 'OTP model is not present'){
+             return res.status(404).json({
+                message : "OTP Verification is not created contact Admin."
+             })
+        }
+
         return res.status(500).json({
             message : 'Internal Server Error',
             error:er
@@ -62,8 +68,69 @@ export const ForgotPasswordController = async (req,res)=>{
 
 } 
 
+/* Forgot Password Reset */
 
 
-export const ResetPassword = (req,res)=>{
-     
+export const ResetPassword = async(req,res)=>{
+      
+    try{
+
+        const {otp , password} = req.body;
+
+        if(!otp || !password){
+             return res.status(404).json({
+                  message : "OTP or password is not present"
+             })
+        }
+
+        const otp_string = otp.toString();
+
+        const result = await ResetPasswordService(otp , password);
+
+        return res.status(201).json({
+            message : 'Password reset succesfull'
+        })
+
+    }
+    catch(er){
+
+        if(er.message === 'User Not Found'){
+            return res.status(404).json({
+                message : "User Not Found"
+            })
+        }
+        else if(er.message === 'OTP is not created'){
+             return res.status(400).json({
+                 message : "OTP is not created contact Admin. "
+             })
+        }
+        else if(er.message === 'OTP expired'){
+            return res.status(401).json({
+                message : "OTP expired.."
+            })
+        }
+         
+    }
+}
+
+
+/* Changing new Password */
+
+
+export const ChangePassword = (req,res)=>{
+      
+    try{
+
+        const result  = verify_credentails_toReset_password(req.body);
+
+        const {curPassword , newPassword} = req.body;
+
+        const password_change  = await 
+
+    }
+    catch(er){
+         logger.info({
+            message : "Changing the User Password"
+         })
+    }
 }

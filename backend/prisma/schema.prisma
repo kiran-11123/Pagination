@@ -23,12 +23,12 @@ model User {
 
 }
 
-model OTP{
+model otp{
    
    id  String @id @default(uuid())
-   email String
-   otp String
-   expiresOn DateTime
+   email String @unique
+   otp  String?
+   expiresOn DateTime?
   createdAt DateTime @default(now())
 
 }

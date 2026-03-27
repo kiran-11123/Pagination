@@ -19,10 +19,19 @@ export const ForgotPasswordService = async (email) => {
 
         const otp = generateOTP();
         const expiresOn = new Date(Date.now() + 15 * 60 + 1000);
-        const otp_data = await prisma.OTP.create({
-            data: {
 
-                email: email,
+        const find_otp_model = await prisma.otp.findUnique({
+             data : {
+                email:email
+             }
+        })
+
+        if(!find_otp_model){
+             throw new Error('OTP model is not present')
+        }
+
+        const otp_data = await prisma.otp.update({
+            data: {
                 otp: otp.toString(),
                 expiresOn
             }
@@ -53,7 +62,7 @@ export const ForgotPasswordService = async (email) => {
           letter-spacing: 4px;
           font-weight: bold;
           color: #333;">
-          ${code}
+          ${otp}
         </div>
       </div>
 
@@ -75,4 +84,54 @@ export const ForgotPasswordService = async (email) => {
     catch (er) {
         throw er;
     }
+}
+
+
+export const ResetPasswordService = async(user_id , email ,  otp , password)=>{
+
+    try{
+
+        const find_user = await prisma.user.findUnique({
+             data:{
+                UserId : user_id
+             }
+        })
+
+        if(!find_user){
+            throw new Error('User Not Found')
+        }
+
+        const find_otp = await prisma.otp.findUnique({
+              data :{
+                email : email 
+              }
+        })
+
+        if(!find_otp){
+             throw new Error('OTP is not created')
+        }
+
+        if(otp !== find_otp.otp || Date.now() > find_otp.expiresOn){
+
+            throw new Error('OTP expired')
+              
+        }
+
+        const new_password_hash = await bcrypt.hash(password , 10);
+
+        const update_new_password = await prisma.user.update({
+            data : {
+                password : new_password_hash
+            },
+            where:{
+                 email  :email , 
+                 UserId : user_id
+            }
+        })
+
+    }
+    catch(er){
+         throw er;
+    }
+     
 }
