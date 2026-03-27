@@ -135,3 +135,41 @@ export const ResetPasswordService = async(user_id , email ,  otp , password)=>{
     }
      
 }
+
+
+export const ChangePasswordService  =async(user_id , email , new_password) =>{
+      
+    try{
+
+         const find_user = await prisma.user.findUnique({
+             data:{
+                UserId : user_id
+             }
+        })
+
+        if(!find_user){
+            throw new Error('User Not Found')
+        }
+
+
+        const new_password_hash = await bcrypt.hash(new_password , 10);
+
+        const update_password = await prisma.user.update({
+             data : {
+                password : new_password_hash
+             },where:{
+                 UserId : user_id , 
+                 email:email 
+             }
+        })
+
+
+        return True
+
+    }
+     catch(er){
+
+        throw er
+         
+     }
+}

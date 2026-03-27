@@ -1,6 +1,7 @@
 import logger from "../../../Global/logger.js"
 import zod, { email } from 'zod'
-import { ForgotPasswordService , ResetPasswordService } from "../../services/auth/Credentials_Manager_Service.js"
+import { ForgotPasswordService , ResetPasswordService , ChangePasswordService} from "../../services/auth/Credentials_Manager_Service.js"
+import { log } from "winston"
 
 
 const Verify_email = zod.object({
@@ -75,6 +76,10 @@ export const ResetPassword = async(req,res)=>{
       
     try{
 
+        logger.info({
+             message : "Resetting the Password"
+        })
+
         const {otp , password} = req.body;
 
         if(!otp || !password){
@@ -85,14 +90,21 @@ export const ResetPassword = async(req,res)=>{
 
         const otp_string = otp.toString();
 
-        const result = await ResetPasswordService(otp , password);
-
+        const result = await ResetPasswordService( req.user.user_id , otp , password);
+        
+         logger.info({
+            message : "Password Reset successfull"
+         })
         return res.status(201).json({
             message : 'Password reset succesfull'
         })
 
     }
     catch(er){
+
+        logger.info({
+            message : `Error while Resetting the password ${er}`
+        })
 
         if(er.message === 'User Not Found'){
             return res.status(404).json({
@@ -117,20 +129,49 @@ export const ResetPassword = async(req,res)=>{
 /* Changing new Password */
 
 
-export const ChangePassword = (req,res)=>{
+export const ChangePassword = async (req,res)=>{
+
+    logger.info({
+       message : `Chnaging the password for the email ${req.body.email}`
+    })
       
     try{
 
         const result  = verify_credentails_toReset_password(req.body);
 
+        if(!result){
+            return res.status(400).json({
+             
+                message  : result.error.flatten().fieldErrors
+             })
+         } 
+            
+        
+
         const {curPassword , newPassword} = req.body;
 
-        const password_change  = await 
+        const password_change  = await ChangePasswordService(req.user.user_id , curPassword , newPassword);
+
+        logger.info({
+            message : "Password Changed Successfull"
+        })
 
     }
     catch(er){
          logger.info({
-            message : "Changing the User Password"
+            message : `Error while Changing the password ${er} `
          })
+
+         if(er.message === 'User Not Found'){
+             return res.status(404).json({
+                message : "User Not Found"
+             })
+         }  
+
+            return res.status(500).json({
+                message : "Internal Server Error",
+                error : er
+            })
     }
 }
+
