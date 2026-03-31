@@ -1,7 +1,9 @@
 
 import { useState } from "react"
 import { Link } from "react-router-dom";
+import axios from 'axios'
 
+const BASEURL = import.meta.env.BASE_URL;
 export default function Register() {
 
     const [email, SetEmail] = useState('');
@@ -10,7 +12,41 @@ export default function Register() {
     const[username , SetUsername] = useState('');
 
 
-    function SubmitForm() {
+   async  function SubmitForm() {
+
+        try{
+
+            const response :any = await axios.post(`${BASEURL}/auth/signup`,{  
+            email,
+            username ,
+            password
+                
+            } ,{
+                withCredentials : true
+            })
+
+            if(response.status === 200){
+                   
+                SetMessage(response.data.message);
+
+                setTimeout(()=>{
+
+                    SetMessage('');
+                    SetEmail('');
+                    SetPassword('');
+                    SetUsername('');
+
+                 },2000)
+
+            }
+            else{
+                 SetMessage(response.data.message) ; 
+            }
+
+        }
+        catch(er){
+                SetMessage("An error occurred during registration. Please try again later.");
+        }
 
 
     }

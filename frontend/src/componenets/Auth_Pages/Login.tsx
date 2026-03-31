@@ -1,5 +1,8 @@
+import axios from "axios";
 import { useState } from "react"
 import { Link } from "react-router-dom";
+
+const BASEURL = import.meta.env.BASE_URL;
 
 export default function Login() {
 
@@ -8,7 +11,37 @@ export default function Login() {
     const [message, SetMessage] = useState('');
 
 
-    function SubmitForm() {
+    async function SubmitForm(e:any) {
+
+        e.preventDefault()
+
+        try{
+
+            const response =await axios.post(`${BASEURL}/auth/signin` , {
+                email,
+                password
+            }, {
+                withCredentials: true
+            })
+
+            if(response.status === 200){
+                  SetMessage(response.data.message);
+
+                  setTimeout(()=>{
+
+                    SetEmail('');
+                    SetPassword('');
+                     
+                  } , 2000)
+            }
+            else{
+                 SetMessage(response.data.message);
+            }
+
+        }
+        catch(er){
+            SetMessage("An error occurred during Login. Please try again later.")
+        }
 
 
     }
