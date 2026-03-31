@@ -1,15 +1,23 @@
 import { useState } from 'react'
 import './App.css'
+import { BrowserRouter , Route , Routes } from 'react-router-dom'
+import Home from './componenets/Opening_page/home'
 
 function App() {
-  const [count, setCount] = useState(0)
+  
 
   return (
-    <div className='text-xl bg-red-400 '>
 
-         hi everyone
-       
-    </div>
+    <BrowserRouter >
+         <Routes>
+
+          <Route path='/' element={<Home />} />
+                
+              
+
+         </Routes>
+     </BrowserRouter>
+    
   )
 }
 
