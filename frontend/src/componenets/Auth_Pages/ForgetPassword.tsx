@@ -10,6 +10,10 @@ export default function ForgetPassword() {
 
      const[email , SetEmail] = useState('');
      const[message , SetMessage] = useState('');
+     const[open , isOpen] = useState(false);
+
+     const[otp  , SetOTP] = useState('');
+     const[newPassword , SetNewPassword] = useState('');
 
 
      async function SubmitForm(c:any) {
@@ -26,6 +30,13 @@ export default function ForgetPassword() {
 
             if(response.status === 200){
                  SetMessage(response.data.message);
+
+                 setTimeout(()=>{
+
+                    SetEmail('');
+                    isOpen(true);
+
+                 } , 1000)
             }
             else{
                 SetMessage(response.data.message);
@@ -38,7 +49,42 @@ export default function ForgetPassword() {
          }
         
      }
+    
+     async function submitResetPasswordForm(e:any){
 
+        e.preventDefault();
+
+        try{
+
+            const response = await axios.post(`${BASEURL}/api/v1/auth/reset-password` ,{
+                 otp ,
+                newPassword
+            },{
+                withCredentials: true
+            })
+
+            if(response.status === 200){
+                  
+                SetMessage(response.data.message);
+
+                setTimeout(()=>{
+
+                    SetOTP('');
+                    SetNewPassword('');
+                    isOpen(false);
+
+                } , 1000)
+            }
+            else{
+                SetMessage(response.data.message);
+            }
+
+        }
+        catch(er){
+             SetMessage('An error occurred during Resetting  Password. Please try again later.')
+        }
+          
+     }
 
 
      return(
@@ -49,7 +95,7 @@ export default function ForgetPassword() {
 
                  <h1 className="font-bold  text-blue-700 text-center text-lg sm:text-xl mb-6 mt-5"> Change Password Here </h1>
 
-                 <form className="space-y-2" onSubmit={SubmitForm} >
+                {!open && ( <form className="space-y-2" onSubmit={SubmitForm} >
 
                     <div>
 
@@ -64,10 +110,56 @@ export default function ForgetPassword() {
                     </div>
 
 
-                        <button className="px-4 py-2 bg-blue-600 text-white  text-sm  text-center rounded-md hover:bg-blue-800 cursor-pointer transition duration-300 mb-3">Submit</button>
+                    
+                    <button className="px-4 py-2 bg-blue-600 text-white  text-sm  text-center rounded-md hover:bg-blue-800 cursor-pointer transition duration-300 mb-3">Submit</button>
 
 
-                 </form>
+                 </form>   )}
+
+
+                 {open && (
+
+                    <form className="space-y-2" onSubmit={submitResetPasswordForm} >
+
+                    <div>
+
+                        <div>
+                            <label className="font-bold text-md sm:text-lg block mb-1">
+                                OTP
+                            </label>
+
+                            <input onChange={(e) => SetOTP(e.target.value)} required value={otp} className="w-full px-4 py-2 text-sm rounded-md border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Enter your OTP" type="text" />
+                        </div>
+
+                    </div>
+
+
+                     <div>
+
+                        <div>
+                            <label className="font-bold text-md sm:text-lg block mb-1">
+                                New Password
+                            </label>
+
+                            <input onChange={(e) => SetNewPassword(e.target.value)} required value={newPassword} className="w-full px-4 py-2 text-sm rounded-md border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Enter your new Password" type="text" />
+                        </div>
+
+                    </div>
+
+                    
+
+
+                    
+                    <button className="px-4 py-2 bg-blue-600 text-white  text-sm  text-center rounded-md hover:bg-blue-800 cursor-pointer transition duration-300 mb-3">Submit</button>
+
+
+                 </form>  
+
+                 )}
+
+
+
+
 
 
                  {message && (
