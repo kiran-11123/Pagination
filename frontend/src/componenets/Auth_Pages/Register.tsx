@@ -2,6 +2,8 @@
 import { useState } from "react"
 import { Link } from "react-router-dom";
 import axios from 'axios'
+
+const BASEURL = import.meta.env.BASE_URL;
 export default function Register() {
 
     const [email, SetEmail] = useState('');
@@ -14,7 +16,7 @@ export default function Register() {
 
         try{
 
-            const response :any = await axios.post("http://localhost:5000/api/v1/auth/signup",{  
+            const response :any = await axios.post(`${BASEURL}/auth/signup`,{  
             email,
             username ,
             password

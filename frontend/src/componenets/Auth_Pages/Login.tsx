@@ -2,6 +2,8 @@ import axios from "axios";
 import { useState } from "react"
 import { Link } from "react-router-dom";
 
+const BASEURL = import.meta.env.BASE_URL;
+
 export default function Login() {
 
     const [email, SetEmail] = useState('');
@@ -15,7 +17,7 @@ export default function Login() {
 
         try{
 
-            const response =await axios.post("http://localhost:5000/api/v1/auth/signin" , {
+            const response =await axios.post(`${BASEURL}/auth/signin` , {
                 email,
                 password
             }, {
