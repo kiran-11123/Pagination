@@ -1,6 +1,7 @@
 
 import { useState } from "react"
 import { Link } from "react-router-dom";
+import axios from 'axios'
 
 export default function Register() {
 
@@ -10,7 +11,41 @@ export default function Register() {
     const[username , SetUsername] = useState('');
 
 
-    function SubmitForm() {
+   async  function SubmitForm() {
+
+        try{
+
+            const response :any = await axios.post("http://localhost:5000/api/v1/auth/signup",{  
+            email,
+            username ,
+            password
+                
+            } ,{
+                withCredentials : true
+            })
+
+            if(response.status === 200){
+                   
+                SetMessage(response.data.message);
+
+                setTimeout(()=>{
+
+                    SetMessage('');
+                    SetEmail('');
+                    SetPassword('');
+                    SetUsername('');
+
+                 },2000)
+
+            }
+            else{
+                 SetMessage(response.data.message) ; 
+            }
+
+        }
+        catch(er){
+                SetMessage("An error occurred during registration. Please try again later.");
+        }
 
 
     }
