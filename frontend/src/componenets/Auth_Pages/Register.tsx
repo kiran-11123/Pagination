@@ -47,6 +47,12 @@ export default function Register() {
         catch(er){
                 SetMessage("An error occurred during registration. Please try again later.");
         }
+        finally{
+             setTimeout(()=>{
+                 
+                SetMessage('');
+             } , 2000)
+        }
 
 
     }

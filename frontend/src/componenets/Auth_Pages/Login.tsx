@@ -42,6 +42,12 @@ export default function Login() {
         catch(er){
             SetMessage("An error occurred during Login. Please try again later.")
         }
+        finally{
+             setTimeout(()=>{
+                 
+                SetMessage('');
+             } , 2000)
+        }
 
 
     }
@@ -104,7 +110,7 @@ export default function Login() {
 
                     <p className="text-sm sm:text-md text-gray-600 px-6 py-2 shadow-lg rounded-md">
                         <Link
-                            to="/forgetpassword"
+                            to="/forget-password"
                             className="text-blue-500 hover:underline cursor-pointer"
                         >
                             Forget password
