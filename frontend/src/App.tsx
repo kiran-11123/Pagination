@@ -4,9 +4,8 @@ import Home from "./componenets/Opening_page/home";
 import Login from "./componenets/Auth_Pages/Login";
 import Register from "./componenets/Auth_Pages/Register";
 import ForgetPassword from "./componenets/Auth_Pages/ForgetPassword";
-import Main from "./componenets/Home/main";
-import SideBar from "./componenets/Home/Sidebar";
 import ProtectedRoute from "./protectedRoute";
+import HomePage from "./componenets/Home/HomePage";
 function App() {
   const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true'; // later replace with real auth check
 
@@ -22,19 +21,12 @@ function App() {
           path="/home"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <Main />
+              <HomePage />
             </ProtectedRoute>
           }
         />
 
-        <Route
-          path="/sidebar"
-          element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <SideBar />
-            </ProtectedRoute>
-          }
-        />
+      
       </Routes>
     </BrowserRouter>
   );
