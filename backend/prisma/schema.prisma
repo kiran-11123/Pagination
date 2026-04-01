@@ -36,11 +36,3 @@ model otp{
   @@index([email])
 
 }
-model Transaction {
-  id          Int       @id @default(autoincrement())
-  amount      Float
-  type        String    // e.g. "credit" or "debit"
-  description String?
-  date        DateTime  @default(now())
-  status      String    @default("pending") // e.g. "pending", "completed", "failed"
-}
