@@ -1,10 +1,13 @@
 import axios from "axios";
 import { useState } from "react"
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const BASEURL = import.meta.env.VITE_BASE_API;
 
 export default function Login() {
+    const navigate = useNavigate();
+
 
     const [email, SetEmail] = useState('');
     const [password, SetPassword] = useState('');
@@ -24,17 +27,19 @@ export default function Login() {
                 withCredentials: true
             })
 
+            console.log(response)
+
             if(response.status === 200){
+
                   SetMessage(response.data.message);
 
                   localStorage.setItem('isAuthenticated', 'true');
 
-                  setTimeout(()=>{
+                 setTimeout(()=>{
+                    navigate('/home');
+                 } , 1000)
 
-                    SetEmail('');
-                    SetPassword('');
-                     
-                  } , 2000)
+                  
             }
             else{
                  SetMessage(response.data.message);
@@ -46,7 +51,8 @@ export default function Login() {
         }
         finally{
              setTimeout(()=>{
-                 
+                 SetEmail('');
+                 SetPassword('');
                 SetMessage('');
              } , 2000)
         }

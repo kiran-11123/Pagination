@@ -6,7 +6,6 @@ type ProtectedRouteProps = {
 };
  
 
-const isAuthenticated =  localStorage.getItem('isAuthenticated') !== null; // Example: Check if a token exists in localStorage
 
 export default function ProtectedRoute({
   isAuthenticated,

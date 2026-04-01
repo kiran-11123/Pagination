@@ -8,7 +8,7 @@ import Main from "./componenets/Home/main";
 import SideBar from "./componenets/Home/Sidebar";
 import ProtectedRoute from "./protectedRoute";
 function App() {
-  const isAuthenticated = false; // later replace with real auth check
+  const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true'; // later replace with real auth check
 
   return (
     <BrowserRouter>
