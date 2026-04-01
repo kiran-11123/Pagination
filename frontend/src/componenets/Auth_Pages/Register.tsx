@@ -3,7 +3,7 @@ import { useState } from "react"
 import { Link } from "react-router-dom";
 import axios from 'axios'
 
-const BASEURL = import.meta.env.BASE_URL;
+const BASEURL = import.meta.env.VITE_BASE_API;
 export default function Register() {
 
     const [email, SetEmail] = useState('');
@@ -12,7 +12,9 @@ export default function Register() {
     const[username , SetUsername] = useState('');
 
 
-   async  function SubmitForm() {
+   async  function SubmitForm(e:any) {
+
+    e.preventDefault();
 
         try{
 
@@ -25,7 +27,9 @@ export default function Register() {
                 withCredentials : true
             })
 
-            if(response.status === 200){
+            console.log(response)
+
+            if(response.status === 201){
                    
                 SetMessage(response.data.message);
 

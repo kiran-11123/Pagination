@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react"
 import { Link } from "react-router-dom";
 
-const BASEURL = import.meta.env.BASE_URL;
+const BASEURL = import.meta.env.VITE_BASE_API;
 
 export default function Login() {
 
@@ -26,6 +26,8 @@ export default function Login() {
 
             if(response.status === 200){
                   SetMessage(response.data.message);
+
+                  localStorage.setItem('isAuthenticated', 'true');
 
                   setTimeout(()=>{
 

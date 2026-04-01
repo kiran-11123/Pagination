@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 
-const BASEURL = import.meta.env.BASE_URL;
+const BASEURL = import.meta.env.VITE_BASE_API;
 
 
 

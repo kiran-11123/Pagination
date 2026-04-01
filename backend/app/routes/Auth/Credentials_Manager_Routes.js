@@ -1,6 +1,6 @@
 import express from 'express'
 import { ForgotPasswordController  , ResetPassword , ChangePassword} from '../../controller/Auth/Credentails_Manager.js';
-import { Access_token_Middleware } from '../../middlewares/AccessToken_middleware';
+import { Access_token_Middleware } from '../../middlewares/AccessToken_middleware.js';
 const Credentails_Router = express.Router();
 
 
