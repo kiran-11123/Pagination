@@ -23,7 +23,7 @@ export default function Home() {
 
                <div className="flex  max-w-sm sm:max-w-4xl text-sm sm:text-lg md:text-xl font-bold  lg:max-w-full items-center justify-between bg-gradient-to-r from-blue-900 to-violet-800 text-white w-full rounded-lg px-5 py-3 cursor-pointer">
                     <div className="px-4 py-2 rounded-md border border-white ">
-                         System Design Playground
+                         Event Driven Scheduler
                     </div>
 
                     <div className="hidden sm:flex  items-center justify-between gap-10 font-roboto">
@@ -72,9 +72,7 @@ export default function Home() {
 
 
                          <p className="text-sm sm:text-base leading-relaxed">
-                              Design, visualize, and understand complex system architectures with ease.
-                              Drag, connect, and build scalable systems using an interactive playground
-                              tailored for developers and system design enthusiasts.
+                             Automate workflows with an event-driven scheduler built for scale. Create scheduled tasks, trigger jobs in real time, and monitor execution across distributed systems with speed and reliability.
                          </p>
 
                     </div>
