@@ -38,7 +38,7 @@ export const SigninContoller = async (req, res) => {
 
         const { email, password } = req.body;
          
-        const {token  , refresh_token} = await SignInService(email, password)
+        const {token  , refresh_token_new} = await SignInService(email, password)
 
 
         if (token === null) {
@@ -55,7 +55,7 @@ export const SigninContoller = async (req, res) => {
 
         })
 
-        res.cookie("refresh_token", refresh_token , {
+        res.cookie("refresh_token", refresh_token_new , {
             httpOnly: true,
             secure: false,
             sameSite: "lax",

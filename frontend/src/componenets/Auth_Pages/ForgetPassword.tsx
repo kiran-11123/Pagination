@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 
-const BASEURL = import.meta.env.BASE_URL;
+const BASEURL = import.meta.env.VITE_BASE_API;
 
 
 
@@ -47,6 +47,12 @@ export default function ForgetPassword() {
               
             SetMessage('An error occurred during Changing Password. Please try again later.')
          }
+         finally{
+             setTimeout(()=>{
+                 
+                SetMessage('');
+             } , 2000)
+        }
         
      }
     
@@ -77,11 +83,19 @@ export default function ForgetPassword() {
             }
             else{
                 SetMessage(response.data.message);
+
+                
             }
 
         }
         catch(er){
              SetMessage('An error occurred during Resetting  Password. Please try again later.')
+        }
+        finally{
+             setTimeout(()=>{
+                 
+                SetMessage('');
+             } , 2000)
         }
           
      }

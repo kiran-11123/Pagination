@@ -1,7 +1,6 @@
 import logger from "../../../Global/logger.js"
 import zod, { email } from 'zod'
 import { ForgotPasswordService , ResetPasswordService , ChangePasswordService} from "../../services/auth/Credentials_Manager_Service.js"
-import { log } from "winston"
 
 
 const Verify_email = zod.object({

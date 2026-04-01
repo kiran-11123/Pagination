@@ -1,10 +1,13 @@
 import axios from "axios";
 import { useState } from "react"
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const BASEURL = import.meta.env.BASE_URL;
+const BASEURL = import.meta.env.VITE_BASE_API;
 
 export default function Login() {
+    const navigate = useNavigate();
+
 
     const [email, SetEmail] = useState('');
     const [password, SetPassword] = useState('');
@@ -24,15 +27,19 @@ export default function Login() {
                 withCredentials: true
             })
 
+            console.log(response)
+
             if(response.status === 200){
+
                   SetMessage(response.data.message);
 
-                  setTimeout(()=>{
+                  localStorage.setItem('isAuthenticated', 'true');
 
-                    SetEmail('');
-                    SetPassword('');
-                     
-                  } , 2000)
+                 setTimeout(()=>{
+                    navigate('/home');
+                 } , 1000)
+
+                  
             }
             else{
                  SetMessage(response.data.message);
@@ -41,6 +48,13 @@ export default function Login() {
         }
         catch(er){
             SetMessage("An error occurred during Login. Please try again later.")
+        }
+        finally{
+             setTimeout(()=>{
+                 SetEmail('');
+                 SetPassword('');
+                SetMessage('');
+             } , 2000)
         }
 
 
@@ -104,7 +118,7 @@ export default function Login() {
 
                     <p className="text-sm sm:text-md text-gray-600 px-6 py-2 shadow-lg rounded-md">
                         <Link
-                            to="/forgetpassword"
+                            to="/forget-password"
                             className="text-blue-500 hover:underline cursor-pointer"
                         >
                             Forget password
