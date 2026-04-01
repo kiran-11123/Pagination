@@ -1,84 +1,47 @@
-import {ReactFlow , useNodesState , useEdgesState , addEdge , Background  , useEdges  , Controls } from "reactflow";
-import  type {Node , Edge , Connection} from "reactflow"
+
 import "reactflow/dist/style.css";
 
-type CustomData ={
-    label :string
-} 
+type SideBarProps = {
+    onAddNode?: (label: string) => void;
+}
+
+
+const items = ['Cache', 'Database', 'API gateway', 'Load balancer', 'Message queue', 'Authentication service', 'Notification service', 'Logging service', 'Monitoring service', 'Analytics service', 'Search engine', 'CDN', 'Object storage', 'File storage', 'Email service', 'SMS service', 'Payment gateway', 'Third-party API']
 
 
 
-const initialNodes : Node<CustomData>[]  = [
-      
-    {
-        id : "1",
-        position : {x : 100 , y:100},
-        data : { label: "API Gateway" }
-    } ,
-
-    {
-        id : "2",
-        position : {x : 100 , y:100},
-        data : { label: "Frontend Server" }
-    },
-
-    {
-        id : "3",
-        position : {x : 100 , y:100},
-        data : { label: "Backend Server" }
-    },
-
-    {
-        id : "4",
-        position : {x : 100 , y:100},
-        data : { label: "Load Balancer" }
-    },
-
-    {
-        id : "5",
-        position : {x : 100 , y:100},
-        data : { label: "Cache" }
-    },
-     {
-        id : "6",
-        position : {x : 100 , y:100},
-        data : { label: "CDN" }
-    }
 
 
-]
-
-const initialEdges :Edge[]  = []
+export default function SideBar({ onAddNode }: SideBarProps) {
 
 
 
-export default function SideBar(){
-      
-  
-    const[nodes , setNodes , onNodesChange] = useNodesState(initialNodes );
-    const[edges , setEdges , onEdgesChange] = useEdgesState(initialEdges);
+    return (
 
-    const onConnect  =(params :Connection)=>{
-         setEdges((eds)=>addEdge(params,eds));
-    }
-     
-    return(
-         
-        <div className="h-screen w-full ">
+        <div className="w-64 bg-slate-900 text-white p-4 border-r border-slate-700 ">
 
-              <ReactFlow  
-                
-                nodes = {nodes}
-                edges={edges}
-                onNodesChange={onNodesChange}
-                onEdgesChange={onEdgesChange}
-                onConnect={onConnect}
-                fitView
+            <h2 className="text-lg font-bold mb-4">Components</h2>
 
-              
-              />
+            <div className=" flex flex-col gap-3">
+
+                {items.map((item, index) => (
+
+                    <button
+                        key={item}
+                        onClick={() => onAddNode?.(item)}
+                        className="text-left px-4 py-3 rounded-lg bg-slate-800 hover:bg-slate-700 transition"
+                    >
+                        {item}
+                    </button>
+                ))}
+
+            </div>
+
+        </div>
 
 
-        </div>  
+
+
+
     )
 }

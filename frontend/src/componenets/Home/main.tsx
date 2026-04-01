@@ -1,13 +1,20 @@
 
+import SideBar from "./Sidebar"
+import MainFlow from "./MainFlow"
 
-
-
+import ReactFlow from "reactflow"
+import "reactflow/dist/style.css"
+import { ReactFlowProvider } from "reactflow"
 
 
 export default function Main(){
      return (
-       <div>
-           Hi welcome to home
-       </div>
+       <ReactFlowProvider>
+     <div className="flex h-screen w-full items-center justify-center gap-4">
+        <SideBar />
+        <MainFlow />
+      </div>
+
+       </ReactFlowProvider>
     )
 }
