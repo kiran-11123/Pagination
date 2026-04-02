@@ -17,6 +17,15 @@ model Orders{
    OrderId Int @id @default(autoincrement())
    OrderName String
    Quantity Int
-   Price Int
+   Total_price Int
 
+}
+
+model Product {
+  productId   Int      @id @default(autoincrement())
+  productName String
+  quantity    Int
+  price       Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
