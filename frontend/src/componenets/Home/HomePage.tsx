@@ -2,8 +2,9 @@
 export default function HomePage(){
       
     return (
-         <div className="">
-             
+         <div >
+               
+               welcome to homepage
          </div>
     )
 }

@@ -10,6 +10,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "kafka": "^0.2.3"
+    "kafka": "^0.2.3",
+    "kafkajs": "^2.2.4"
   }
 }
