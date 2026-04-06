@@ -4,14 +4,14 @@ dotenv.config()
 const app =express();
 app.use(express.json());
 const PORT = process.env.PORT;
+import DataRouter from './app/routes/DataRouter.js';
 
 
 
 
 
 
-
-
+app.use("/products" , DataRouter)
 
 
 
