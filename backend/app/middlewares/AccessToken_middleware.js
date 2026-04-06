@@ -19,10 +19,15 @@ export const Access_token_Middleware = (req, res, next) => {
                     message: "Unauthorized Token"
                 })
             }
+                
+        const token_new = req.cookies.token;
 
+        if(!token_new){
                 return res.status(401).json({
                     message: "Unauthorized"
                 })
+
+            }
         }
 
 
