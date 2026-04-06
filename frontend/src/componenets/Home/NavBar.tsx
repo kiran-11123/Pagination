@@ -1,8 +1,50 @@
 import { useState } from "react";
 import {X , Menu} from "lucide-react";
+import axios from "axios";
+import { replace, useNavigate } from "react-router-dom";
+
+
+const API_URL = import.meta.env.VITE_BASE_API
 export default function NavBar(){
 
+     const navigate = useNavigate();
+
     const[open , isOpen] = useState(false); 
+    const[message , SetMessage] = useState('');
+
+
+    async function  HandleLogout(e:any) {
+
+       e.preventDefault();
+
+       try{
+
+           const response = await axios.post(`${API_URL}auth/logout` , {} , {
+                withCredentials : true
+           })
+
+           if(response.status === 200){
+                localStorage.removeItem('isAuthenticated');
+                navigate("/", { replace: true });
+
+           }
+           else{
+                
+               SetMessage(response.data.message);
+           }
+
+       }
+       catch(er : any){
+           SetMessage(er);
+       }
+
+       finally{
+
+          SetMessage('');
+           
+       }
+     
+    }
       
     return(
          <div>
@@ -17,7 +59,7 @@ export default function NavBar(){
 
                 <div className="items-center space-x-4 hidden sm:flex">
                     <button className="px-4 py-2 bg-gray-600 text-white  text-sm  text-center rounded-md hover:bg-gray-800 cursor-pointer transition duration-300">Cart</button>
-                    <button className="px-4 py-2 bg-blue-600 text-white  text-sm  text-center rounded-md hover:bg-blue-800 cursor-pointer transition duration-300">Logout</button>
+                    <button onClick={HandleLogout} className="px-4 py-2 bg-blue-600 text-white  text-sm  text-center rounded-md hover:bg-blue-800 cursor-pointer transition duration-300">Logout</button>
                 </div>
 
                  <div className="sm:hidden flex items-center">
@@ -36,7 +78,7 @@ export default function NavBar(){
                               <button   className="px-4 py-2 rounded-lg bg-gray-300 hover:bg-white/20 transition font-medium shadow-md">
                                    Cart
                               </button>
-                              <button  className="px-4 py-2 rounded-lg bg-purple-400 hover:bg-purple-600 transition font-medium shadow-md">
+                              <button  onClick={HandleLogout} className="px-4 py-2 rounded-lg bg-purple-400 hover:bg-purple-600 transition font-medium shadow-md">
                                       Logout
                               </button>
                          </div>

@@ -15,7 +15,7 @@ const Products_API = import.meta.env.VITE_ORDERS_API
 
 export default function HomePage(){
    
-     const[products , SetProducts] = useState([]);
+     const[products , SetProducts] = useState<Products[]>([]);
      const[message , SetMessage] = useState('');
     
 
@@ -58,11 +58,11 @@ export default function HomePage(){
                <NavBar />
 
 
-                <div className="flex flex-wrap gap-5 justify-center mt-5">
+                <div className="flex flex-wrap  gap-5 justify-center mt-5">
 
                       {products.length >0 &&(
                           
-                          products.map((item : Products)=>(
+                          products.map((item: Products)=>(
                                 
                               <Card  {...item}/>
                           ))
