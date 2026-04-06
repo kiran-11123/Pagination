@@ -5,9 +5,9 @@ const DataRouter = express.Router();
 
 
 
-DataRouter.get("/get-products" ,Access_token_Middleware ,GetDataController)
+DataRouter.get("/get-products" ,GetDataController)
 
-
+    
 
 
 export default DataRouter

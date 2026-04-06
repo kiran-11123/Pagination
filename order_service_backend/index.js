@@ -1,9 +1,14 @@
 import express from 'express'
 import dotenv from 'dotenv'
+import cors from 'cors'
 dotenv.config()
 const app =express();
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true
+}));
 app.use(express.json());
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5001;
 import DataRouter from './app/routes/DataRouter.js';
 
 
@@ -11,7 +16,7 @@ import DataRouter from './app/routes/DataRouter.js';
 
 
 
-app.use("/products" , DataRouter)
+app.use("/api/v1/products" , DataRouter)
 
 
 
