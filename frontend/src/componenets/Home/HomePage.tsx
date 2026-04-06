@@ -26,7 +26,7 @@ export default function HomePage(){
                
             try{
 
-                const response = await axios.get(`${Products_API}/products/get-products` ,{
+                const response = await axios.get(`${Products_API}products/get-products` ,{
                     withCredentials : true
                 } )
 
