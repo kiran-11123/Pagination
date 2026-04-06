@@ -18,7 +18,7 @@ export default function Register() {
 
         try{
 
-            const response :any = await axios.post(`${BASEURL}/auth/signup`,{  
+            const response :any = await axios.post(`${BASEURL}auth/signup`,{  
             email,
             username ,
             password

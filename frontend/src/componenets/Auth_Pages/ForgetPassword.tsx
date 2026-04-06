@@ -22,7 +22,7 @@ export default function ForgetPassword() {
 
          try{
 
-            const response = await axios.post(`${BASEURL}/auth/forgot-password` , {
+            const response = await axios.post(`${BASEURL}auth/forgot-password` , {
                 email
             } ,{
                 withCredentials : true

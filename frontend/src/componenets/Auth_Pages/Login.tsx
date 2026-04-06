@@ -20,7 +20,7 @@ export default function Login() {
 
         try{
 
-            const response =await axios.post(`${BASEURL}/auth/signin` , {
+            const response =await axios.post(`${BASEURL}auth/signin` , {
                 email,
                 password
             }, {
