@@ -23,11 +23,9 @@ export default function Login() {
             const response =await axios.post(`${BASEURL}auth/signin` , {
                 email,
                 password
-            }, {
-                withCredentials: true
             })
 
-            console.log(response)
+            
 
             if(response.status === 200){
 
