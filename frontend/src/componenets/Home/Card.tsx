@@ -16,10 +16,37 @@ export default function Card(item : Products){
 
     const[ProductCount , SetProductCount] = useState(0);
     const[message , SetMessage] = useState('');
+    
+    async function AddToCart(){
+          
+        try{
 
+        }
+        catch(er :any){
+
+            SetMessage(er)
+             
+        }
+        finally{
+             setTimeout(()=>{
+                  SetMessage('');
+            } , 1000)
+        }
+    }
     function IncreaseCount(){
-           
-         SetProductCount(c=>c+1);
+
+        try{
+              SetProductCount(c=>c+1);
+        }
+        catch(er :any){
+              SetMessage(er)
+        }
+        finally{
+              setTimeout(()=>{
+                  SetMessage('');
+            } , 1000)
+        }
+         
     }
 
     function DecreaseCount(){
@@ -77,7 +104,7 @@ export default function Card(item : Products){
 
     <button className="px-4 py-2 border rounded-lg bg-blue-500 
                        text-white shadow-xl hover:bg-blue-600 
-                       hover:font-bold w-full sm:w-auto">
+                       hover:font-bold w-full sm:w-auto " onClick={AddToCart}>
         Add to Cart
     </button>
 
