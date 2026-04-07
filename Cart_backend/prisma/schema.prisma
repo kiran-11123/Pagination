@@ -16,7 +16,7 @@ datasource db {
 model Cart{
     
   Cart_id Int @unique @id @default(autoincrement())
-  user_id Int ?
+  user_id Int 
   
   items CartItem[]
 
