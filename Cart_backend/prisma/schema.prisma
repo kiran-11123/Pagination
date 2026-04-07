@@ -5,15 +5,47 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../app/generated/prisma"
+  output   = "../generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Cart{
     
   Cart_id Int @unique @id @default(autoincrement())
-  product_id
+  user_id Int ?
+  
+  items CartItem[]
+
+  status CartStatus @default(ACTIVE)
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+}
+
+model CartItem{
+   
+   id String @id @default(uuid())
+
+   cartId Int
+
+   cart Cart @relation(fields: [cartId] ,references: [Cart_id])
+
+   
+   Product_id Int
+   name String
+   price Int
+    quantity Int
+
+    @@unique([cartId, Product_id])
+}
+
+enum CartStatus{
+    ACTIVE
+    CHECKED_OUT
+    ABANDONED
 }
