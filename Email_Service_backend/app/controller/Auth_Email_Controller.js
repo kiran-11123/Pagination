@@ -1,4 +1,4 @@
-
+import { Auth_Email_Servive } from "../service/Auth_Email_Service.js";
 
 
 
@@ -8,12 +8,19 @@ export const Email_controller = async(req,res)=>{
        
     try{
 
-         const email = req.email;
+         const data = req.data;
+         const result = await Auth_Email_Servive(data)
 
-         const result = await Auth_Email_Service(email)
+         return true;
 
     }
     catch(er){
+
+        return res.status(500).json({
+
+            message : "Error while sending the email" ,
+
+        })
           
     }
 }
