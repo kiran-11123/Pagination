@@ -1,6 +1,7 @@
 import prisma from "../../../Global/db.js";
 import { generateOTP } from "../../../Global/utils/generate_otp.js";
 import transporter from "../../../Global/nodemailer/node.js";
+import { producer } from "../../../../kafka/index.js";
 
 export const ForgotPasswordService = async (email) => {
 
@@ -37,7 +38,11 @@ export const ForgotPasswordService = async (email) => {
             }
         })
 
-        let mailoptions = {
+
+        await producer.send({
+            topic : "email-service-topic",
+            messages : [
+                {
 
             from: "eventnest.official.main@gmail.com",
             to: email,
@@ -73,8 +78,10 @@ export const ForgotPasswordService = async (email) => {
     </div>
             `
         }
+            ]
+        })
 
-        await transporter.sendMail(mailoptions);
+        
 
         return true;
 

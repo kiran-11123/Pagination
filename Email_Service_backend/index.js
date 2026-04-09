@@ -1,20 +1,23 @@
-import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
+import express from 'express'
+const app = express();
+app.use(express.json());
+
 dotenv.config();
-
-const MAIL_PASSWORD = process.env.GMAIL_APP_PASSWORD;
-
+const port = process.env.PORT || 5003;
 
 
-const transporter = nodemailer.createTransport({
-     service : "gmail",
-     auth :{
-        user: "eventnest.official.main@gmail.com", 
-          pass: MAIL_APP_PASSWORD,
-     },
-     tls:{
-         rejectUnauthorized: false,  
-     },
+
+
+
+
+
+
+app.listen(port , ()=>{
+       
+     console.log(`Email Service Running on PORT : ${port}`);
 })
 
-export default transporter
+
+
+
