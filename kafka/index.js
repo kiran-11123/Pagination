@@ -7,6 +7,18 @@ export const kafka = new Kafka({
 
 export const producer = kafka.producer();
 
-export const createConsumer = (groupId) => {
-  return kafka.consumer({ groupId });
-};
+
+
+export const Email_Consumer = kafka.consumer({ groupId: "email-service-group" });
+
+await Email_Consumer.connect();
+
+await Email_Consumer.subscribe({topic : "email-service-topic" , fromBeginning: true})
+
+
+await Email_Consumer.run({
+     
+    eachMessage : async({topic , message})=>{
+       
+    },
+})
