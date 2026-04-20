@@ -14,10 +14,13 @@ export const refresh_token_middleware = (req,res)=>{
         message : 'AccessToken is generating using the RefreshToken'
     })
 
+    console.log("Refresh Token in Middleware" , req.cookies.refresh_token)
+
+
     try{
 
-        const refresh_token = req.cookies.refresh_token;
-        console.log("Refresh Token in Middleware" , refresh_token)
+        const refresh_token_new = req.cookies.refresh_token;
+        console.log("Refresh Token in Middleware" , refresh_token_new)
 
         if(!refresh_token){
             return res.status(401).json({
@@ -25,7 +28,8 @@ export const refresh_token_middleware = (req,res)=>{
             })
         }
 
-        const decoded = jwt.verify(refresh_token , REFRESH_TOKEN )
+        const decoded = jwt.verify(refresh_token_new , REFRESH_TOKEN );
+        console.log("Decoded Refresh Token in Middleware" , decoded)
 
         if(!decoded){
             return res.status(401).json({

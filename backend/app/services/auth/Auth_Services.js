@@ -44,6 +44,9 @@ export const SignInService = async (email, password) => {
         const token = generate_token(details);
         const refresh_token_new = refresh_token(details);
 
+        console.log("Access Token in SignIn Service" , token)
+        console.log("Refresh Token in SignIn Service" , refresh_token_new)
+
 
         return {token , refresh_token_new}
 

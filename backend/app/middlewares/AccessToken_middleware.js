@@ -11,6 +11,7 @@ export const Access_token_Middleware = (req, res, next) => {
     try{
 
         const token = req.cookies.token;
+        console.log("Access Token in Middleware" , token)
         
         if (!token) {
 

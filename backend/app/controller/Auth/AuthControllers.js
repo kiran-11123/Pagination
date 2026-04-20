@@ -63,6 +63,9 @@ export const SigninContoller = async (req, res) => {
 
         })
 
+        console.log("Token sent in cookie from Signin Controller" , token)
+        console.log("Refresh Token sent in cookie from Signin Controller" , refresh_token_new)
+
 
        
          logger.info({
