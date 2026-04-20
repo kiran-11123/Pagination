@@ -43,7 +43,7 @@ app.use(limiter);
 app.use("/api/v1" , Page_Router)
 app.use("/api/v1/auth" , Auth_Router);
 app.use("/api/v1/credentails" , Credentails_Router);
-app.use("/api/v1/auth/logout" , Logout_Router);
+app.use("/api/v1/logout" , Logout_Router);
 
 
 
