@@ -18,6 +18,12 @@ export const ForgotPasswordController = async (req,res)=>{
 
     try{
 
+        console.log("Forgot Password Request received for the email " , req.body.email)
+
+        logger.info({
+            message : `Forgot Password Request received for the email ${req.body.email}`
+        })
+
         const {email } = req.body;
 
         const validate_email = Verify_email.safeParse(email);

@@ -1,18 +1,20 @@
-import prisma from "../../../Global/db.js";
 import { generateOTP } from "../../../Global/utils/generate_otp.js";
-import transporter from "../../../Global/nodemailer/node.js";
 import { producer } from "../../../../kafka/index.js";
+import prisma from '../../../Global/db.js';
+
 
 export const ForgotPasswordService = async (email) => {
 
     try {
-
-
-        const find_email = await prisma.user.findUnique({
-            data: {
-                email: email
-            }
+        
+        console.log("Forgot Password Service is called for the email " , email)
+    const find_email = await prisma.user.findUnique({
+            where: {
+                email: email,
+            },
         })
+
+        console.log("Email found in database for Forgot Password Service " , find_email)
 
         if (!find_email) {
             throw new Error('Email Validation Failed')
@@ -22,7 +24,7 @@ export const ForgotPasswordService = async (email) => {
         const expiresOn = new Date(Date.now() + 15 * 60 + 1000);
 
         const find_otp_model = await prisma.otp.findUnique({
-             data : {
+             where : {
                 email:email
              }
         })
@@ -32,6 +34,9 @@ export const ForgotPasswordService = async (email) => {
         }
 
         const otp_data = await prisma.otp.update({
+            where: {
+                email: email
+            },
             data: {
                 otp: otp.toString(),
                 expiresOn
@@ -44,6 +49,10 @@ export const ForgotPasswordService = async (email) => {
             messages : [
                 {
 
+                    key : "forgot-password",
+            
+            value : JSON.stringify({ 
+                
             from: "eventnest.official.main@gmail.com",
             to: email,
             subject: "Password Change Code ",
@@ -76,8 +85,12 @@ export const ForgotPasswordService = async (email) => {
       </p>
 
     </div>
-            `
-        }
+            ` 
+
+
+        })
+
+    }
             ]
         })
 

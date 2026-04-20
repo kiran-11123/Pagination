@@ -22,7 +22,7 @@ export default function ForgetPassword() {
 
          try{
 
-            const response = await axios.post(`${BASEURL}auth/forgot-password` , {
+            const response = await axios.post(`${BASEURL}credentails/forgot-password` , {
                 email
             } ,{
                 withCredentials : true
@@ -69,7 +69,7 @@ export default function ForgetPassword() {
 
         try{
 
-            const response = await axios.post(`${BASEURL}/api/v1/auth/reset-password` ,{
+            const response = await axios.post(`${BASEURL}credentails/reset-password` ,{
                  otp ,
                 newPassword
             },{
