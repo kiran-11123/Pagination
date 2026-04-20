@@ -4,9 +4,9 @@ import { Access_token_Middleware } from '../../middlewares/AccessToken_middlewar
 const Credentails_Router = express.Router();
 
 
-Credentails_Router.post("/forgot-password" , Access_token_Middleware , ForgotPasswordController);
-Credentails_Router.post("/reset-password" , Access_token_Middleware , ResetPassword);
-Credentails_Router.post("/change-password" , Access_token_Middleware , ChangePassword);
+Credentails_Router.post("/forgot-password"  , ForgotPasswordController);
+Credentails_Router.post("/reset-password"  , ResetPassword);
+Credentails_Router.post("/change-password"  , ChangePassword);
 
 
 
