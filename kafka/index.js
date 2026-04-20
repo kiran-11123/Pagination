@@ -25,11 +25,13 @@ await Email_Consumer.run({
       try{
         const data = JSON.parse(message.value.toString());
         console.log("Sending to URL:", Email_url);
-        await  axios.post(`${Email_url}` ,{
-        data
-      } , {
-        withCredentials : true
-      })
+       const response =  await axios.post(`${Email_url}`, data, {
+          withCredentials: true
+        })
+
+        if(response.status === 200){
+          console.log("Email sent successfully for the data " , data);
+        }
 
       }
       catch(er){
