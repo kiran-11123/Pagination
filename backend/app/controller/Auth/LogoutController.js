@@ -3,8 +3,7 @@ export const LogoutController = async(req , res)=>{
       
     try{
 
-      console.log("Logout Controller Called" , req.cookies.token);
-      console.log("Logout Controller Called" , req.cookies.refresh_token);
+    
 
             
             res.clearCookie("token", {
