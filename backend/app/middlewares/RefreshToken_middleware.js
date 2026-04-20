@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
-import { generate_token } from '../../Global/utils/jwt.js';
+import { refresh_token } from '../../Global/utils/refresh_token.js';
 import logger from '../../Global/logger.js';
 dotenv.config(); 
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN
@@ -25,7 +25,7 @@ export const refresh_token_middleware = (req,res)=>{
 
         const decoded = jwt.verify(refresh_token , REFRESH_TOKEN )
 
-        const new_access_token = generate_token(decoded) 
+        const new_access_token = refresh_token(decoded) 
 
 
   
