@@ -19,7 +19,7 @@ export default function NavBar(){
 
        try{
 
-           const response = await axios.post(`${API_URL}auth/logout` , {} , {
+           const response = await axios.post(`${API_URL}logout/logout`,{}  , {
                 withCredentials : true
            })
 
@@ -35,7 +35,15 @@ export default function NavBar(){
 
        }
        catch(er : any){
-           SetMessage(er);
+           if(er.response?.data?.message){
+               SetMessage(er.response.data.message);
+           }
+           else if(er.message){
+               SetMessage(er.message);
+           }
+           else{
+               SetMessage('An error occurred during logout');
+           }
        }
 
        finally{
@@ -88,6 +96,13 @@ export default function NavBar(){
 
 
                </div>
+
+
+               {message && (
+                    <div className="fixed top-4 right-4 bg-red-500 text-white px-4 py-2 rounded-md shadow-md">
+                         {message}
+                    </div>
+               )}
 
 
 

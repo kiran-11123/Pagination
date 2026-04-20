@@ -23,9 +23,15 @@ export default function Card(item : Products){
 
         }
         catch(er :any){
-
-            SetMessage(er)
-             
+            if(er.response?.data?.message){
+                SetMessage(er.response.data.message);
+            }
+            else if(er.message){
+                SetMessage(er.message);
+            }
+            else{
+                SetMessage('Error adding to cart');
+            }
         }
         finally{
              setTimeout(()=>{
@@ -39,7 +45,12 @@ export default function Card(item : Products){
               SetProductCount(c=>c+1);
         }
         catch(er :any){
-              SetMessage(er)
+              if(er.message){
+                  SetMessage(er.message);
+              }
+              else{
+                  SetMessage('Error updating count');
+              }
         }
         finally{
               setTimeout(()=>{
@@ -64,8 +75,12 @@ export default function Card(item : Products){
         }
 
         catch(er :any){
-             
-            SetMessage(er);
+             if(er.message){
+                  SetMessage(er.message);
+             }
+             else{
+                  SetMessage('Error updating count');
+             }
         }
         finally{
              

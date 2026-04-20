@@ -23,6 +23,8 @@ export default function Login() {
             const response =await axios.post(`${BASEURL}auth/signin` , {
                 email,
                 password
+            }, {
+                withCredentials: true
             })
 
             
@@ -40,12 +42,21 @@ export default function Login() {
                   
             }
             else{
+                  
                  SetMessage(response.data.message);
             }
 
         }
-        catch(er){
-            SetMessage("An error occurred during Login. Please try again later.")
+        catch(er : any){
+            if(er.response?.data?.message){
+                SetMessage(er.response.data.message);
+            }
+            else if(er.message){
+                SetMessage(er.message);
+            }
+            else{
+                SetMessage("An error occurred during Login. Please try again later.")
+            }
         }
         finally{
              setTimeout(()=>{
@@ -54,7 +65,7 @@ export default function Login() {
                 SetMessage('');
              } , 2000)
         }
-
+        
 
     }
 

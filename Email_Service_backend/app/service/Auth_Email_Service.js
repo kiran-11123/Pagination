@@ -1,4 +1,4 @@
-import transporter from "../transporter";
+import transporter from "../transporter.js";
 
 
 export const Auth_Email_Servive = async(data)=>{

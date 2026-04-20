@@ -40,8 +40,16 @@ export default function HomePage(){
                 }
 
             }
-            catch(er){
-                 SetMessage("Something went wrong while fetching the products")
+            catch(er : any){
+                 if(er.response?.data?.message){
+                    SetMessage(er.response.data.message);
+                 }
+                 else if(er.message){
+                    SetMessage(er.message);
+                 }
+                 else{
+                    SetMessage("Something went wrong while fetching the products");
+                 }
             }
             
          }
