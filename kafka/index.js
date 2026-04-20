@@ -4,6 +4,8 @@ import axios from 'axios'
 dotenv.config();
 
 const Email_url = process.env.Email_backend_URL;
+
+console.log("Email Backend URL in Kafka Consumer " , Email_url)
 export const kafka = new Kafka({
   clientId: "ecommerce-app",
   brokers: ["localhost:9092"],
@@ -22,9 +24,14 @@ await Email_Consumer.run({
     eachMessage : async({topic , message})=>{
       try{
         const data = JSON.parse(message.value.toString());
-        await  axios.post(`${Email_url}/auth/ForgotPasswordService` ,{
-        data
-      })
+        console.log("Sending to URL:", Email_url);
+       const response =  await axios.post(`${Email_url}`, data, {
+          withCredentials: true
+        })
+
+        if(response.status === 200){
+          console.log("Email sent successfully for the data " , data);
+        }
 
       }
       catch(er){

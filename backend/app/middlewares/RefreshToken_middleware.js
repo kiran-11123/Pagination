@@ -8,7 +8,7 @@ const REFRESH_TOKEN = process.env.REFRESH_TOKEN
 
 
 
-export const refresh_token_middleware = (req,res)=>{
+export const refresh_token_middleware = (req,res,next)=>{
 
     logger.info({
         message : 'AccessToken is generating using the RefreshToken'
@@ -20,16 +20,14 @@ export const refresh_token_middleware = (req,res)=>{
     try{
 
         const refresh_token_new = req.cookies.refresh_token;
-        console.log("Refresh Token in Middleware" , refresh_token_new)
 
-        if(!refresh_token){
+        if(!refresh_token_new){
             return res.status(401).json({
                 message : 'Refresh Token is missing'
             })
         }
 
         const decoded = jwt.verify(refresh_token_new , REFRESH_TOKEN );
-        console.log("Decoded Refresh Token in Middleware" , decoded)
 
         if(!decoded){
             return res.status(401).json({
@@ -37,39 +35,34 @@ export const refresh_token_middleware = (req,res)=>{
             })
         }
 
-        const new_access_token = generate_token(decoded) 
+        // Remove exp property to avoid conflict when generating new token
+        const { exp, iat, ...payloadData } = decoded;
+        const new_access_token = generate_token(payloadData) 
 
-
-  
-
-
-  res.cookie("token", new_access_token, {
+        res.cookie("token", new_access_token, {
             httpOnly: true,
             secure: false,
             sameSite: "strict", 
             maxAge: 15*60*1000
-
         })
 
-    logger.info({
-        message : "New AccessToken is generated"
-    })
+        logger.info({
+            message : "New AccessToken is generated"
+        })
 
-    return res.status(200).json({
-        message : "Access Token Generated.."
-    })
+        // Don't send response here - just call next() to continue the middleware chain
+        next();
 
     }
     catch(er){
+        logger.info({
+            message : `Error while generating the new AccessToken , ${er}`
+        })
 
-      logger.info({
-        message : `Error while generating the new AccessToken , ${er}`
-      })
-
-         return res.status(500).json({
+        return res.status(500).json({
             message: "Internal Server Error",
             error: er
-         })
+        })
     }
 }
 
