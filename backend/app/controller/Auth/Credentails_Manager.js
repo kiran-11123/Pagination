@@ -84,18 +84,29 @@ export const ResetPassword = async(req,res)=>{
         logger.info({
              message : "Resetting the Password"
         })
+         
+       
+        const {otp , newPassword, email} = req.body;
 
-        const {otp , password} = req.body;
 
-        if(!otp || !password){
+        if(!otp || !newPassword){
              return res.status(404).json({
                   message : "OTP or password is not present"
              })
         }
-
+        
+        const validating_data = verify_credentails_toReset_password.safeParse({email : email, password : newPassword})
+        
+        if(!validating_data){
+             return res.status(400).json({
+                  message : validating_data.error.flatten().fieldErrors
+             })
+        }
         const otp_string = otp.toString();
 
-        const result = await ResetPasswordService( req.user.user_id , otp , password);
+        
+
+        const result = await ResetPasswordService( email ,  otp , newPassword);
         
          logger.info({
             message : "Password Reset successfull"

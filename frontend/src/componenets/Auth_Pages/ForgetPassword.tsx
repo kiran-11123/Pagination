@@ -71,7 +71,8 @@ export default function ForgetPassword() {
 
             const response = await axios.post(`${BASEURL}credentails/reset-password` ,{
                  otp ,
-                newPassword
+                newPassword,
+                email
             },{
                 withCredentials: true
             })
@@ -110,6 +111,9 @@ export default function ForgetPassword() {
              setTimeout(()=>{
                  
                 SetMessage('');
+                SetEmail('')
+                SetNewPassword('')
+                SetOTP('');
              } , 2000)
         }
           
@@ -170,7 +174,20 @@ export default function ForgetPassword() {
                                 New Password
                             </label>
 
-                            <input onChange={(e) => SetNewPassword(e.target.value)} required value={newPassword} className="w-full px-4 py-2 text-sm rounded-md border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Enter your new Password" type="text" />
+                            <input onChange={(e) => SetNewPassword(e.target.value)} required value={newPassword} className="w-full px-4 py-2 text-sm rounded-md border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Enter your new Password" type="password" />
+                        </div>
+
+                    </div>
+
+
+                    <div>
+
+                        <div>
+                            <label className="font-bold text-md sm:text-lg block mb-1">
+                                Email
+                            </label>
+
+                            <input onChange={(e) => SetEmail(e.target.value)} required value={email} className="w-full px-4 py-2 text-sm rounded-md border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Enter your Email" type="email" />
                         </div>
 
                     </div>

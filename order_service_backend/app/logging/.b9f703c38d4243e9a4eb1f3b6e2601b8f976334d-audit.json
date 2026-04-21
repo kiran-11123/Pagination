@@ -6,16 +6,6 @@
     "auditLog": "F:\\projects\\other\\small_poc's\\Pagination\\order_service_backend\\app\\logging\\.b9f703c38d4243e9a4eb1f3b6e2601b8f976334d-audit.json",
     "files": [
         {
-            "date": 1775493976733,
-            "name": "F:\\projects\\other\\small_poc's\\Pagination\\order_service_backend\\app\\logging\\app-2026-04-06.log",
-            "hash": "cc168bdd95fab2583175478f4bd8b981cfde8b7b623e7a089e12a308956bf4c5"
-        },
-        {
-            "date": 1775569202030,
-            "name": "F:\\projects\\other\\small_poc's\\Pagination\\order_service_backend\\app\\logging\\app-2026-04-07.log",
-            "hash": "c0f927f112aff79cd3a81afb423e7efdb4f8d9a38d5135f88b9fae3a6abb1095"
-        },
-        {
             "date": 1775752635347,
             "name": "F:\\projects\\other\\small_poc's\\Pagination\\order_service_backend\\app\\logging\\app-2026-04-09.log",
             "hash": "35535297a1a812ec301037264f322c361c19de5de012f4e5c617bd9290a1f0a9"
@@ -29,6 +19,11 @@
             "date": 1776696173014,
             "name": "F:\\projects\\other\\small_poc's\\Pagination\\order_service_backend\\app\\logging\\app-2026-04-20.log",
             "hash": "d110b449d99ba8ed32cca2531a6bd51757af78f4b551c29e5a31371e1f16d6de"
+        },
+        {
+            "date": 1776782628743,
+            "name": "F:\\projects\\other\\small_poc's\\Pagination\\order_service_backend\\app\\logging\\app-2026-04-21.log",
+            "hash": "28bcd10229d3730cdcbe0ccaf3ca838c2491ac752a1cc5998b262efddf638f40"
         }
     ],
     "hashType": "sha256"
