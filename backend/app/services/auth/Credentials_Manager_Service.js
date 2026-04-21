@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 import { generateOTP } from "../../../Global/utils/generate_otp.js";
 import { producer } from "../../../../kafka/index.js";
 import prisma from '../../../Global/db.js';
@@ -21,7 +22,7 @@ export const ForgotPasswordService = async (email) => {
         }
 
         const otp = generateOTP();
-        const expiresOn = new Date(Date.now() + 15 * 60 + 1000);
+        const expiresOn = new Date(Date.now() + 15 * 60 * 1000);
 
         const find_otp_model = await prisma.otp.findUnique({
              where : {
@@ -107,11 +108,11 @@ export const ForgotPasswordService = async (email) => {
 }
 
 
-export const ResetPasswordService = async(  otp , password)=>{
+export const ResetPasswordService = async( email ,  otp , password)=>{
 
     try{
 
-        console.log("Reset Password Service is called with data " ,  {  otp , password} )
+        console.log("Reset Password Service is called with data " ,  { email,  otp , password} )
          
         const find_user = await prisma.user.findUnique({
             where:{
@@ -124,7 +125,7 @@ export const ResetPasswordService = async(  otp , password)=>{
         }
 
         const find_otp = await prisma.otp.findUnique({
-              data :{
+              where :{
                 email : email 
               }
         })
@@ -133,7 +134,7 @@ export const ResetPasswordService = async(  otp , password)=>{
              throw new Error('OTP is not created')
         }
 
-        if(otp !== find_otp.otp || Date.now() > find_otp.expiresOn){
+        if(otp !== find_otp.otp || Date.now() > find_otp.expiresOn.getTime()){
 
             throw new Error('OTP expired')
               
@@ -146,11 +147,11 @@ export const ResetPasswordService = async(  otp , password)=>{
                 password : new_password_hash
             },
             where:{
-                 email  :email , 
-                 UserId : user_id
+                 email  :email
             }
         })
 
+        return true;
     }
     catch(er){
          throw er;
@@ -164,7 +165,7 @@ export const ChangePasswordService  =async(user_id , email , new_password) =>{
     try{
 
          const find_user = await prisma.user.findUnique({
-             data:{
+             where:{
                 UserId : user_id
              }
         })
@@ -186,12 +187,12 @@ export const ChangePasswordService  =async(user_id , email , new_password) =>{
         })
 
 
-        return True
+        return true;
 
     }
      catch(er){
 
-        throw er
+        throw er;
          
      }
 }

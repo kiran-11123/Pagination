@@ -1,7 +1,14 @@
 import { Kafka } from "kafkajs";
 import dotenv from 'dotenv'
 import axios from 'axios'
-dotenv.config();
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const envPath = path.resolve(__dirname, '.env');
+
+dotenv.config({ path: envPath });
 
 const Email_url = process.env.Email_backend_URL;
 
