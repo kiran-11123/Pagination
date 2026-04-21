@@ -111,6 +111,9 @@ export default function ForgetPassword() {
              setTimeout(()=>{
                  
                 SetMessage('');
+                SetEmail('')
+                SetNewPassword('')
+                SetOTP('');
              } , 2000)
         }
           
