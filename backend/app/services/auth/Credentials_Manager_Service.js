@@ -107,15 +107,17 @@ export const ForgotPasswordService = async (email) => {
 }
 
 
-export const ResetPasswordService = async(user_id , email ,  otp , password)=>{
+export const ResetPasswordService = async(  otp , password)=>{
 
     try{
 
+        console.log("Reset Password Service is called with data " ,  {  otp , password} )
+         
         const find_user = await prisma.user.findUnique({
-             data:{
-                UserId : user_id
-             }
-        })
+            where:{
+                email : email
+            }
+        })  
 
         if(!find_user){
             throw new Error('User Not Found')
