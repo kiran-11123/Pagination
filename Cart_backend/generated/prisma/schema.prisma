@@ -13,12 +13,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Cart {
+  Cart_id Int @id @unique @default(autoincrement())
+  user_id Int
 
-model Cart{
-    
-  Cart_id Int @unique @id @default(autoincrement())
-  user_id Int 
-  
   items CartItem[]
 
   status CartStatus @default(ACTIVE)
@@ -28,25 +26,23 @@ model Cart{
   updatedAt DateTime @updatedAt
 }
 
-model CartItem{
-   
-   id String @id @default(uuid())
+model CartItem {
+  id String @id @default(uuid())
 
-   cartId Int
+  cartId Int
 
-   cart Cart @relation(fields: [cartId] ,references: [Cart_id])
+  cart Cart @relation(fields: [cartId], references: [Cart_id])
 
-   
-   Product_id Int
-   name String
-   price Int
-    quantity Int
+  Product_id Int
+  name       String
+  price      Int
+  quantity   Int
 
-    @@unique([cartId, Product_id])
+  @@unique([cartId, Product_id])
 }
 
-enum CartStatus{
-    ACTIVE
-    CHECKED_OUT
-    ABANDONED
+enum CartStatus {
+  ACTIVE
+  CHECKED_OUT
+  ABANDONED
 }
