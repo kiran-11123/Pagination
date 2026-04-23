@@ -20,3 +20,5 @@ export const producer = kafka.producer();
 await producer.connect();
 export const Email_Consumer = kafka.consumer({ groupId: "email-service-group" });
 await Email_Consumer.connect();
+
+
